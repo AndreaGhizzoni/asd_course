@@ -1,0 +1,256 @@
+\documentclass[12pt]{article} 
+\usepackage[margin=1in]{geometry}
+\usepackage{array}
+\usepackage{tabularx} % for tables
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage{enumitem} %% for custom list
+%\usepackage{graphicx} %% for images
+%\usepackage{multirow} %% for tables
+%\usepackage{bigints}  %% for integrals
+%\usepackage[T1]{fontenc} %% for pipe simbol
+%\usepackage{wrapfig} %% used to wrap img around text: https://goo.gl/SrlHQI
+%\usepackage{bytefield} %% for drawing packet structure
+%\usepackage[dvipsnames]{xcolor} %% to use with VerbatimInput to import stuff from text file
+%\usepackage{fancyvrb}
+
+% used for tabbed spacing
+%\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+%\newcommand{\tabtwo}[1]{\hspace{.2\textwidth}\rlap{#1}}
+%\newcommand{\tabthree}[1]{\hspace{.3\textwidth}\rlap{#1}}
+%\newcommand{\tabfour}[1]{\hspace{.4\textwidth}\rlap{#1}}
+
+% using \code{come code monospaced}
+%\def\code#1{\texttt{#1}}
+
+% redefine \VerbatimInput
+%\RecustomVerbatimCommand{\VerbatimInput}{VerbatimInput}%
+%{fontsize=\footnotesize,
+ %
+% frame=lines,  % top and bottom rule only
+% framesep=2em, % separation between frame and text
+% rulecolor=\color{Gray},
+ %
+ %label=\fbox{\color{Black}data.txt},
+ %labelposition=topline,
+ %
+% commandchars=\|\(\), % escape character and argument delimiters for commands within the verbatim
+% commentchar=*        % comment character
+%}
+
+\renewcommand{\arraystretch}{1.4}
+
+\delimitershortfall-1sp
+\newcommand\abs[1]{\left|#1\right|}
+
+
+\begin{document}
+\date{}
+%\author{Andrea Ghizzoni \\
+%some other info}
+%\title{\vspace{-11ex}} %% used for no title
+%\maketitle
+
+%\section{}\label{}
+%\subsection{}\label{}
+%\subsubsection{}\label{}
+%\paragraph{•}
+
+\subsection*{Sort}
+\begin{tabularx}{\textwidth}{ p{6cm} p{2.7cm} p{1.3cm} | X }
+    \hline
+    Insertion Sort & $O(n^2)$ & $O(n)$ &  \\ 
+    \hline
+	Counting Sort  & $O(k+n)$ & $O(n)$ &  {\footnotesize conoscendo il range di valori} \\ 
+	\hline
+	Heap Sort      & $O(n\log(n))$ &  ------ &  \\ 
+	\hline
+	Quick Sort     & $O(n\log(n))$ & $O(n^2)$  & {\footnotesize nel caso di vettore gi\'a ordinato} \\ 
+	\hline
+\end{tabularx}
+\\
+\subsection*{Grafo}
+\begin{tabularx}{\textwidth}{ p{6cm} p{2.7cm} p{1.3cm} | X }
+    \hline
+    BFS - DFS                   & $O(n+m)$ & ------ &  \\ \hline
+	Componenti Connesse         & $O(n+m)$ & ------ &  \\ \hline
+	Strong Componenti Connesse  & $O(n+m)$ & ------ &  \\ \hline
+	Ciclo                       & $O(n+m)$ & ------ &  \\ \hline
+\end{tabularx}
+\\
+\subsection*{Cammini Minimi}
+\begin{tabularx}{\textwidth}{ p{6cm} p{2.7cm} | X }
+    \hline
+    	Dijkstra {\scriptsize (coda a priorit\'a)}  & 
+    	$O(n^2)$ & 
+    	{\footnotesize deleteMin() $\forall$ nodo $\Rightarrow O(n)n $} \\ 
+    \hline
+		Johnson  {\scriptsize (coda a priorit\'a con heap binario)}  & 
+		$O(m\log(n))$ & 
+		{\footnotesize migliore per grafi sparsi, m = num archi} \\ 
+	\hline
+		Belman-Ford-Moore {\scriptsize (coda)} & 
+		$O(n+m)$ &
+		{\footnotesize il migliore perch\'e lavora con archi negativi} \\ 
+	\hline
+\end{tabularx}
+\\
+\subsection*{Cammini Minimi fra tutte le Coppie di Nodi}
+\begin{tabularx}{\textwidth}{ p{6cm} p{2.7cm} | X }
+    \hline
+    	Floyd-Warshall & 
+    	$O(n^3)$ & 
+    	\\ 
+    \hline
+\end{tabularx}
+\\
+\subsection*{Albero di Copertura Minima}
+\begin{tabularx}{\textwidth}{ p{6cm} p{2.7cm} | X }
+    \hline
+    	Kruskal & 
+    	$O(m\log(n))$ & 
+    	{\footnotesize ordina archi in modo crescente di peso e utilizza MFSET} \\ 
+    \hline
+   		Prim & 
+    	$O(m\log(n))$ & 
+    	{\footnotesize aggiunge sempre l'arco con peso minore partendo da un nodo radice} \\ 
+    \hline
+\end{tabularx}
+\\
+\subsection*{Rete di Flusso}
+\begin{tabularx}{\textwidth}{ p{6cm} p{2.7cm} | X }
+    \hline
+    	Ford-Fulkerson & 
+    	$O( \abs{f^{\star}}(m+n) )$ & 
+    	{\footnotesize cammino aumentante con DFS che csta $O(n+m)$} \\ 
+    \hline
+   		Edmond-Kapp & 
+    	$O(nm^2)$ & 
+    	{\footnotesize cammini aumentanti con BFS} \\ 
+    \hline
+\end{tabularx}
+
+\newpage
+
+\subsection*{Master Theorem}
+\[
+ T(n) = \sum_{1 \leq i \leq h}^{} a_i T(n-i) + cn^b
+\]
+ponendo $\alpha = \sum_{1 \leq i \leq h}^{} a_i$ si ottiene:
+\begin{enumerate}[noitemsep]
+	\item $T(n)$ \'e $O(n^{b+1})$ se $a = 1$
+	\item $T(n)$ \'e $O(a^nn^b)$ se $a \geq 2$
+\end{enumerate}
+
+
+\[
+ T(n) = a T(n/b) + cn^{\beta}
+\]
+ponendo $\alpha = \frac{\log(a)}{\log(b)}$ si ottiene:
+\begin{enumerate}[noitemsep]
+	\item $T(n)$ \'e $O(n^{\alpha})$ se $\alpha > \beta$
+	\item $T(n)$ \'e $O(n^{\alpha}\log(n))$ se $\alpha = \beta$
+	\item $T(n)$ \'e $O(n^{\beta})$ se $\alpha < \beta$
+\end{enumerate}
+
+\newpage
+\subsection*{Lista con Puntatori}
+\begin{tabularx}{\textwidth}{ p{6cm} p{2.7cm} | X }
+    \hline
+    	costruzione & $O(1)$ & \\ 
+    \hline
+		insert & $O(1)$ & \\
+	\hline
+		remove & $O(1)$ & \\ 
+	\hline
+		get & $O(n)$ & \\
+	\hline
+		exists & $O(n)$ & \\
+	\hline
+\end{tabularx}
+
+\subsection*{Stack e Queue}
+\begin{tabularx}{\textwidth}{ p{6cm} p{2.7cm} | X }
+    \hline
+    	costruzione & $O(1)$ & \\ 
+    \hline
+		push, enqueue & $O(1)$ & {\footnotesize solo in testa} \\
+	\hline
+		pop, top & $O(1)$ & {\footnotesize solo in testa} \\ 
+	\hline
+		top, dequeue & $O(1)$ & \\
+	\hline
+		isEmpty & $O(1)$ & \\
+	\hline
+\end{tabularx}
+
+\subsection*{Tabelle Hash - con ABR}
+\begin{tabularx}{\textwidth}{ p{6cm} p{2.7cm} | X }
+    \hline
+    	costruzione & $O(1)$ & \\ 
+    \hline
+		insert & $O(\log(n))$ & \\
+	\hline
+		lookup & $O(\log(n))$ & \\ 
+	\hline
+		remove & $O(\log(n))$ & \\
+	\hline
+\end{tabularx}
+
+\subsection*{Alberi Binari di ricerca}
+\begin{tabularx}{\textwidth}{ p{6cm} p{2.7cm} | X }
+    \hline
+    	costruzione & $O(1)$ & \\ 
+    \hline
+		insertNode & $O(\log(n))$ & \\
+	\hline
+		lookupNode & $O(\log(n))$ & \\ 
+	\hline
+		removeNode & $O(\log(n))$ & \\
+	\hline
+\end{tabularx}
+
+\newpage
+\subsection*{Grafo con Matrice di Adiacenza}
+\begin{tabularx}{\textwidth}{ p{6cm} p{2.7cm} | X }
+    \hline
+    	costruzione & $O(1)$ & \\ 
+    \hline
+		adj & $O(n^2)$ & \\
+	\hline
+		V & $O(n)$ & \\ 
+	\hline
+		spazio di memoria & $O(n^2)$ & \\
+	\hline
+		visita & $O(n+m)$ & \\
+	\hline
+\end{tabularx}
+
+\subsection*{Grafo con Liste di Adiacenza}
+\begin{tabularx}{\textwidth}{ p{6cm} p{2.7cm} | X }
+    \hline
+    	costruzione & $O(1)$ & \\ 
+    \hline
+		adj & $O(n)$ & \\
+	\hline
+		V & $O(n)$ & \\ 
+	\hline
+		spazio di memoria & $O(n)$ & \\
+	\hline
+		visita & $O(n+m)$ & \\
+	\hline
+\end{tabularx}
+
+\subsection*{Merge Find Set - basata su Foresta con compressione dei cammini ed Euristica sul Rango}
+\begin{tabularx}{\textwidth}{ p{6cm} p{2.7cm} | X }
+    \hline
+    	costruzione & $O(n)$ & \\ 
+    \hline
+    	merge & $O(1)$ & \\
+	\hline
+		find & $O(1)$ & \\
+	\hline
+\end{tabularx}
+
+\end{document}
